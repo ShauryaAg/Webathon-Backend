@@ -58,11 +58,7 @@ class RegisterTeamAPI(generics.GenericAPIView):
         return Response({
             "team": TeamSerializer(team, context=self.get_serializer_context()).data,
         })
-
-    # def update(self, instance, data):
-    #     student = Student.objects.get(pk=data['students'].student__id)
-    #     instance.students.add(student)
-
+        
 
 class TeamAPI(viewsets.ReadOnlyModelViewSet):
     serializer_class = TeamSerializer
@@ -70,14 +66,11 @@ class TeamAPI(viewsets.ReadOnlyModelViewSet):
     queryset = Team.objects.all()
 
 
-class ProjectsAPI(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ProjectSerializer
-
-    queryset = Project.objects.all()
-
-
 class AddStudentAPI(APIView):
     serializer_class = RegisterTeamSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
 
     def post(self, request, *args, **kwargs):
         data_obj = request.data
@@ -93,4 +86,27 @@ class AddStudentAPI(APIView):
         return Response({
             'team': TeamSerializer(team).data
         })
-    
+
+class ProjectAPI(viewsets.ModelViewSet):
+    serializer_class = ProjectSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    queryset = Project.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        student_team = user.student.all()
+
+        return Project.objects.filter(team__in=student_team)
+
+class StudentTeamAPI(viewsets.ReadOnlyModelViewSet):
+    serializer_class = TeamSerializer
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+
+    def get_queryset(self):
+        user = self.request.user
+        return user.student.all()

@@ -21,9 +21,8 @@ class Student(AbstractUser):
 class Team(models.Model):
     team_name = models.CharField(max_length=50, unique=True)
     idea = models.CharField(max_length=200)
-    project_link = models.URLField(max_length=200, blank=True)
     students = models.ManyToManyField(
-        Student, blank=True)
+        Student, blank=True, related_name='student')
     token = models.CharField(max_length=5, unique=True, null=True, blank=True)
 
     def __str__(self):
@@ -45,6 +44,9 @@ class Team(models.Model):
 
 
 class Project(models.Model):
-    github_url = models.URLField(max_length=200, null=True)
-    link = models.URLField(max_length=200)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    git_url = models.URLField(max_length=200, null=True)
+    deploy_link = models.URLField(max_length=200)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team')
+
+    def __str__(self):
+        return self.team.team_name

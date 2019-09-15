@@ -40,7 +40,6 @@ class LoginStudentSerializer(serializers.Serializer):
 
 
 class RegisterTeamSerializer(serializers.ModelSerializer):
-    # students = StudentSerializer(many=True)
 
     class Meta:
         model = Team
@@ -55,10 +54,10 @@ class RegisterTeamSerializer(serializers.ModelSerializer):
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
-        fields = ('team_name', 'idea', 'project_link', 'token', 'students',)
+        fields = ('id', 'team_name', 'idea', 'token', 'students',)
     
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('link', 'team',)
+        fields = ('id', 'git_url', 'deploy_link', 'team',)
