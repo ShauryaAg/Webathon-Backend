@@ -27,7 +27,7 @@ DEBUG = True
 
 AUTH_USER_MODEL = 'teams.Student'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dsc-webathon.herokuapp.com']
 
 
 # Application definition
