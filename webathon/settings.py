@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'teams',
     'rest_framework',
     'knox',
+    'rest_framework_swagger',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -60,6 +61,7 @@ ROOT_URLCONF = 'webathon.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
 }
 
 TEMPLATES = [
@@ -131,3 +133,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 django_heroku.settings(locals())
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025

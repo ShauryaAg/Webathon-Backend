@@ -9,7 +9,8 @@ from .models import *
 from .signals import students_changed
 from django.db.models.signals import m2m_changed
 
-m2m_changed.connect(students_changed, sender=Team.students.through, dispatch_uid='students_changed')
+m2m_changed.connect(students_changed, sender=Team.students.through,
+                    dispatch_uid='students_changed')
 
 
 class RegisterStudentAPI(generics.GenericAPIView):
@@ -44,7 +45,7 @@ class StudentAPI(generics.RetrieveAPIView):
     ]
     serializer_class = StudentSerializer
 
-    def get_object(self, request):
+    def get_object(self):
         return self.request.user
 
 
@@ -58,7 +59,7 @@ class RegisterTeamAPI(generics.GenericAPIView):
         return Response({
             "team": TeamSerializer(team, context=self.get_serializer_context()).data,
         })
-        
+
 
 class TeamAPI(viewsets.ReadOnlyModelViewSet):
     serializer_class = TeamSerializer
@@ -77,8 +78,8 @@ class AddStudentAPI(APIView):
 
         if (len(Team.objects.filter(token=data_obj['team_token'])) == 0):
             return Response({
-                'err':'Team Not Found'
-                }, status=400)
+                'err': 'Team Not Found'
+            }, status=400)
 
         student_obj = Student.objects.get(pk=data_obj['student'])
         team = Team.objects.get(token=data_obj['team_token'])
@@ -86,6 +87,7 @@ class AddStudentAPI(APIView):
         return Response({
             'team': TeamSerializer(team).data
         })
+
 
 class ProjectAPI(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
@@ -100,6 +102,7 @@ class ProjectAPI(viewsets.ModelViewSet):
         student_team = user.student.all()
 
         return Project.objects.filter(team__in=student_team)
+
 
 class StudentTeamAPI(viewsets.ReadOnlyModelViewSet):
     serializer_class = TeamSerializer

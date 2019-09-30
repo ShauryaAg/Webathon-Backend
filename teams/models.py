@@ -44,9 +44,11 @@ class Team(models.Model):
 
 
 class Project(models.Model):
-    git_url = models.URLField(max_length=200, null=True)
-    deploy_link = models.URLField(max_length=200)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team')
+    project_name = models.CharField(max_length=50)
+    git_url = models.URLField(max_length=200)
+    deploy_link = models.URLField(max_length=200, null=True)
+    team = models.ForeignKey(
+        Team, on_delete=models.CASCADE, related_name='team')
 
     def __str__(self):
-        return self.team.team_name
+        return self.team.project_name

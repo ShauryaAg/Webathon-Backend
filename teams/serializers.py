@@ -51,11 +51,12 @@ class RegisterTeamSerializer(serializers.ModelSerializer):
 
         return team
 
+
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = ('id', 'team_name', 'idea', 'token', 'students',)
-    
+
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
