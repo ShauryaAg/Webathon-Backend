@@ -6,12 +6,6 @@ from .serializers import StudentSerializer, RegisterStudentSerializer, LoginStud
 
 from .models import *
 
-from .signals import students_changed
-from django.db.models.signals import m2m_changed
-
-m2m_changed.connect(students_changed, sender=Team.students.through,
-                    dispatch_uid='students_changed')
-
 
 class RegisterStudentAPI(generics.GenericAPIView):
     serializer_class = RegisterStudentSerializer

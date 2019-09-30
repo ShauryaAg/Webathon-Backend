@@ -37,6 +37,7 @@ ALLOWED_HOSTS = ['dsc-webathon.herokuapp.com']
 INSTALLED_APPS = [
     'teams',
     'rest_framework',
+    'django_rest_passwordreset',
     'knox',
     'drf_yasg',
     'django.contrib.admin',
@@ -133,7 +134,23 @@ STATIC_URL = '/static/'
 
 django_heroku.settings(locals())
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'dscbvp.web@gmail.com'
+EMAIL_HOST_PASSWORD = 'divvansh'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+DJANGO_REST_PASSWORDRESET_NO_INFORMATION_LEAKAGE = True
+
+DJANGO_REST_MULTITOKENAUTH_RESET_TOKEN_EXPIRY_TIME = 1
+
+DJANGO_REST_PASSWORDRESET_TOKEN_CONFIG = {
+    "CLASS": "django_rest_passwordreset.tokens.RandomNumberTokenGenerator",
+    "OPTIONS": {
+        "min_number": 100000,
+        "max_number": 999999
+    }
+}

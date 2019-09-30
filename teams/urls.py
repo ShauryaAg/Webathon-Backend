@@ -1,11 +1,10 @@
 from django.urls import path, include
-from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from knox import views as knox_views
+from django.conf.urls import url
 
 from .api import LoginStudentAPI, RegisterStudentAPI, RegisterTeamAPI, StudentAPI, TeamAPI, AddStudentAPI, ProjectAPI, StudentTeamAPI
 
 from rest_framework.routers import DefaultRouter
-
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -32,8 +31,8 @@ router.register(r'api/auth/student/team',
                 StudentTeamAPI, basename='student_team')
 
 urlpatterns = [
-    path(r'^swagger(?P<format>\.json|\.yaml)$',
-         schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger(?P<format>\.json|\.yaml)$',
+        schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger',
                                          cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',
@@ -46,14 +45,9 @@ urlpatterns = [
     path('api/auth/reg/student', RegisterStudentAPI.as_view()),
     path('api/auth/reg/team', RegisterTeamAPI.as_view()),
     path('api/add/student', AddStudentAPI.as_view()),
-    path('api/auth/password/reset/',
-         PasswordResetView.as_view(), name='password_reset'),
-    path('api/auth/password/reset/done/',
-         PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('api/auth/password/reset/confirm/<uidb64>-<token>',
-         PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('api/auth/password/reset/complete/',
-         PasswordResetCompleteView.as_view(), name='password_reset_complete')
+
+    url(r'^api/password/',
+        include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]
 
 urlpatterns += router.urls
