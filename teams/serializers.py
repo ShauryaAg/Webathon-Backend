@@ -61,4 +61,4 @@ class TeamSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id', 'git_url', 'deploy_link', 'team',)
+        fields = ('id', 'project_name', 'git_url', 'deploy_link', 'team',)

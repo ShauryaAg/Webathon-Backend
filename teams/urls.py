@@ -6,9 +6,24 @@ from .api import LoginStudentAPI, RegisterStudentAPI, RegisterTeamAPI, StudentAP
 
 from rest_framework.routers import DefaultRouter
 
-from rest_framework_swagger.views import get_swagger_view
 
-schema_view = get_swagger_view(title='Webathon API')
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Webathon API",
+        default_version='v1',
+        description="Test description",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
 
 router = DefaultRouter()
 router.register(r'api/auth/team', TeamAPI, basename='Team')
@@ -17,7 +32,13 @@ router.register(r'api/auth/student/team',
                 StudentTeamAPI, basename='student_team')
 
 urlpatterns = [
-    path('api/doc', schema_view, name='documentation'),
+    path(r'^swagger(?P<format>\.json|\.yaml)$',
+         schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger',
+                                         cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc',
+                                       cache_timeout=0), name='schema-redoc'),
+
     path('api/auth', include('knox.urls')),
     path('api/auth/student', StudentAPI.as_view()),
     path('api/auth/login', LoginStudentAPI.as_view()),
