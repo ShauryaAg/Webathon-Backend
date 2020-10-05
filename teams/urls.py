@@ -2,7 +2,7 @@ from django.urls import path, re_path, include
 from knox import views as knox_views
 from django.conf.urls import url
 
-from .api import LoginStudentAPI, RegisterStudentAPI, RegisterTeamAPI, StudentAPI, TeamAPI, AddStudentAPI, ProjectAPI, StudentTeamAPI, RegisterOrganizerAPI, ActivateAccount
+from .api import LoginStudentAPI, RegisterStudentAPI, RegisterTeamAPI, StudentAPI, TeamAPI, AddStudentAPI, ProjectAPI, StudentTeamAPI, UpdatePassword, RegisterOrganizerAPI, ActivateAccount
 
 from rest_framework.routers import DefaultRouter
 
@@ -48,6 +48,7 @@ urlpatterns = [
     path('api/auth/reg/student', RegisterStudentAPI.as_view()),
     path('api/auth/reg/team', RegisterTeamAPI.as_view()),
     path('api/add/student', AddStudentAPI.as_view()),
+    path('api/auth/changepassword', UpdatePassword.as_view()),
 
     re_path('activate/(?P<uidb64>[0-9A-Za-z_\\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
         ActivateAccount, name='activate'),
