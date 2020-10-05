@@ -1,0 +1,445 @@
+{% autoescape off %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DSC BVP Email</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Google Fonts
+    <link href="https://fonts.googleapis.com/css?family=Sunflower:300,500&display=swap" rel="stylesheet"> -->
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Sunflower:300,500&display=swap');
+
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .header {
+            width: 100%;
+            height: 35vh;
+            text-align: center;
+            background: rgb(254,254,254);
+            background: linear-gradient(0deg, rgba(254,254,254,1) 0%, rgba(181,239,250,1) 100%);
+        }
+
+        .card {
+            border: solid rgba(131, 129, 129, 0.2);
+            border-radius: 16px;
+            margin: auto;
+            margin-top: 10px;
+            /* border-collapse: unset !important; */
+        }
+
+        .header-logo-image {
+            display: block;
+            height: 15vh;
+            margin: auto;
+        }
+
+        .helper {
+            display: inline-block;
+            height: 7vh;
+        }
+
+        .dsc-text {
+            display: block;
+            font-family: 'Sunflower', sans-serif;
+            font-size: 5vh;
+            text-align: center;
+        }
+
+        .container {
+            /* border: solid #acacac; */
+        }
+
+        .center {
+            text-align: center;
+            display: block;
+            width: 50vw;
+            margin-top: 3vh;
+            margin-left: auto;
+            margin-right: auto;
+            /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); */
+            border-radius: 16px;
+        }
+
+        .greet-td {
+            text-align: center;
+        }
+
+        .greet {
+            display: block;
+            font-family: 'Sunflower', sans-serif;
+            font-size: 3vh;
+            font-weight: 500;
+            padding-top: 3vh;
+        }
+
+        .image {
+            display: block;
+            margin: auto;
+            width: 50%;
+            margin-top: 5%;
+        }
+
+        .btn-link {
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            outline: none;
+        }
+
+        .btn-link:hover {
+            text-decoration: none;
+        }
+
+        .email-btn {
+            display: block;
+            background: #3FC6D0;
+            background: linear-gradient(95.33deg, #3FC6D0 0%, #71E981 100%);
+            width: 20vw;
+            height: 6vh;
+            font-family: 'Sunflower', sans-serif;
+            color: #ffffff;
+            border: none;
+            border-radius: 4vw;
+            outline: none;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        .email-btn:focus {
+            outline: none;
+        }
+
+        .bottom-text {
+            display: block;
+            text-align: center;
+            font-family: 'Sunflower', sans-serif;
+            font-size: 1.5vh;
+            padding-bottom: 5px;
+        }
+
+        .bottom-image {
+            display: block;
+            width: 30vw;
+            padding: 2vh;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        p {
+            margin-top: 10px;
+            line-height: 0;
+        }
+
+        @media screen and (max-width: 600px) {
+            .header {
+                height: 30vh;
+            }
+
+            .center {
+                width: 90vw;
+            }
+
+            .header-logo-image {
+                height: 10vh;
+            }
+
+            .greet {
+                font-size: 3vh;
+            }
+
+            .email-btn {
+                border-radius: 10vw;
+                width: 50vw;
+                font-size: 1.7vh;
+            }
+
+            .bottom-text {
+                padding-bottom: 2px;
+            }
+
+            .bottom-image {
+                width: 50vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <span class="helper"></span>
+        <img class="header-logo-image" src="https://lh3.googleusercontent.com/m7SXf5TpNX4jnQUevPeI_iQdi7ex6torW4ZE_RCr9ytn4HuKGeWhtLFhmANhRyztepmko7Q1hjHz9hbevUnwScq6Ih5aaqN89cPD6qHZ00ArD8OPDDL6rApu6f3OqplFoqSpg3xhlG8drcItH5G4E1rA-kkgIRk96hO3kA7LDEjvkDQFIH5_wRYeulmhchoLw78jf6k-Hsu4YahbQo0P3ey4zQYIadu5hV-bWKGq_iMtHVuWLpIYIKtM6-_ePI_U3pnRbAgEm-9EwbmYPaGPcmfwZUUIMIZ81XJaKqecdxBfYBxI-JE9NbFx8PP68Bbeo0sFyB4Ky5NfLR8ecGWb-VND-gMNELT40i2IIB_e2-5wHK4RT7fBZgzRGVu__vkmN_NwgP7GfANsUiTDacinO3Dj9_dr6rlApah89EaA1MtE7Uz5QBEJM0wAAx0SuVGEHz8D1OrXKk0DG2vXC-7DJRuZjaAOlouJmy8F9OPxZyLjgCTYPX9XQCgFCkxfA647OUGelxlMvUKPTfFr3FCG9fhk7z472EY_TjI9Kq5T0T3Ek5V6okRcbMk1XHjOIiQThXxgEDfWOCffucZC0tCqOxU5tGB6d9Rr_Rp4a_8MLgcOjXtN_Gq0J8yKNqVNrcna2Gatm9GbtCKZu1pBUQRpSfNOevjJ2DY=w438-h223-no" alt="DSC Logo">
+        <span class="dsc-text"><b>DSC</b> BVP</span>
+    </div>
+    <table class="card">
+        <tbody>
+
+            <tr>
+                <td class="greet-td">
+                    <span class="greet">
+                        <p>
+                            Hi {{user}}, you're registered
+                        </p>
+                    </span>
+                </td>
+            <tr>
+                <td>
+                    <img class="image" src="https://lh3.googleusercontent.com/O9FguvHDRDhMeu5r4yfRzthuQLjrgzlfZzdLojWQyUxVtI0v4RUCZu8LZH6wDbMDtVhjQVVo_PFaBZ8aNlV5-R455lmY-3WtKZY4SQt04-jb23X_-rf8CQa3w1W6MVJ4-rpxj5-w35PBmuPoj2iAPeejk2qudVCFDGgl44NzhWHwAxCWzMQTls4WEFFlmJ9NfzJns4pHh-Ld1IQLWDQoKcka4VqmNPeWO0l2t5r-nOv6Df7UFGXQnTEV-N07lkA046f96gu7NMtG_-D6dq-dGFIsXp5kCTrWT28afgiMCuTD7C3HeZGfj_U6xYgJqKvYvOD-CAI9bdvdGBxT0RISU4PoG2i8T5JACQNqpYxhrSLbwTkhsphsGO0-2xbmSK-jE25QFF1RRQ7rK-_K8NRDMPj09Y-LRAAWD1umy4vXWkhE_Q4Qdu1i1EpcDlT6afxAA4O2kWAaTzMmjvnR5qlMPYY2vPEPPpPeCKErR4gjYN36omIJ1phc5yIJr1dheHazyANqxoHbxoMs04XmQIKo5eydGptE4rBrYI5Riqdk_hgBRw0qhWNy2ETEYsH271cZqMipWE3H4_wtBkEYMiXV4JFUqzONqIF8gsy5qyWH181y_L_8mvBnsp2E5PCWEMHk0aLWou8h6Pm7gjOw9K6Qg4s6vgp2KoM=s466-no" alt="hihu">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a class="btn-link" href="http://{{ domain }}{% url 'activate' uidb64=uid token=token %}">
+                        <button class="email-btn">
+                            confirm your email
+                        </button>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class="bottom-text">
+                        <p>
+                            or don't.
+                        </p>
+                        <p>
+                            actually, do :|
+                        </p>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <img class="bottom-image" src="https://developers.google.com/community/dsc/images/dsc_lockup.png"
+            alt="Developer Student Club">
+    </div>
+</body>
+
+</html>
+
+
+
+<!-- 
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Sunflower:300,500&display=swap" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Sunflower:300,500&display=swap');
+
+        .body{
+            padding: 0;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: monospace;
+        }
+
+        .body:visited{
+            color: black;
+        }
+
+        .header{
+            width: 100%;
+            height: 50vh;
+            background: #41BDF2;
+        }
+
+        .header-logo-image{
+            display: block;
+            height: 30vh;
+            margin: auto;
+        }
+
+        .helper{
+            display: inline-block;
+            height: 7vh;
+        }
+
+        .dsc-text{
+            display: block;
+            font-family:monospace;
+            font-size: 5vh;
+            text-align: center;
+            color: white;
+
+        }
+
+        .center{
+            display: block;
+            width: 50vw;
+            margin-top: 3vh;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 16px;
+            border: solid lightgrey;
+            background-color: #ffffff;
+            box-shadow: 0px 4px 10px grey;
+            /* margin-top:-10%; */
+        }
+
+        .greet{
+
+            display: block;
+            /* font-family: 'Sunflower', sans-serif; */
+            font-size: 5vh;
+            font-weight: 500;
+            padding-top: 1.5vh;
+            padding-left: 1vw; 
+        }
+
+        .image{
+            display: block;
+            margin: auto;
+            width: 30%;
+        }
+
+        .btn-link{
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .btn-link:hover{
+            text-decoration: none;
+        }
+
+        .email-btn{
+            display: block;
+            background: linear-gradient(95.33deg, #3FC6D0 0%, #71E981 100%);
+            width: 20vw;
+            height: 6vh;
+            /* font-family: 'Sunflower', sans-serif; */
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4vw;
+            outline: none;
+            margin-left: auto;  
+            margin-right: auto;
+        }
+
+        /* .email-btn:focus{
+            outline: none;
+        } */
+
+        .bottom-text{
+            display: block;
+            text-align: center;
+            font-family: 'Sunflower', sans-serif;
+            font-size: 1.5vh;
+            padding-bottom: 5px;
+        }
+
+        .bottom-image{
+            display: block;
+            width: 30vw;
+            padding: 2vh;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        a:any-link{
+
+            cursor: pointer;
+
+        }
+
+        @media screen and (max-width: 600px){
+            .header{
+                height: 40vh;
+            }
+
+            .center{
+                width: 90vw;
+            }
+
+            .header-logo-image{
+                height: 20vh;
+            }
+
+            .greet{
+                font-size: 3vh;
+            }
+
+            .image{
+                height: 30vh;
+            }
+
+            .email-btn{
+                border-radius: 10vw;
+                width: 50vw;
+                font-size: 1.7vh;
+            }
+
+            .bottom-text{
+                padding-bottom: 2px;
+            }
+
+            .bottom-image{
+                width: 50vw;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="body">
+    <div class="header">
+        <span class="helper"></span>
+        <img class="header-logo-image" src="https://i.imgur.com/aXsT4KM.png" alt="DSC Logo">
+        <span class="dsc-text"><b>DSC</b> BVP</span>
+    </div>
+    <div class="container center">
+        <span class="greet">
+            Hi {{ user }}, you're registered ! 
+        </span>
+        <img class="image" src="https://i.imgur.com/ynl6mxV.jpg" alt="hihu">
+        <a class="btn-link" href=" http://{{ domain }}{% url 'activate' uidb64=uid token=token %}">
+            <button class="email-btn" >
+                Confirm  
+            </button>
+        </a>
+        <span class="bottom-text">
+            or don't.
+            <p style="line-height: 0%" >
+                actually, do :|
+            </p>
+        </span>
+    </div>
+    <div>
+        <img class="bottom-image" src="https://developers.google.com/community/dsc/images/dsc_lockup.png" alt="Developer Student Club">
+    </div>
+    </div>
+</body>
+</html> --> 
+{% endautoescape %}

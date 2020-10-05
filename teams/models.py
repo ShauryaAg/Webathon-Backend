@@ -7,9 +7,9 @@ import hashlib
 class Student(AbstractUser):
     email = models.EmailField(max_length=254, unique=True)
     college = models.CharField(max_length=80)
-    phone_no = models.CharField(max_length=10)
+    phone_no = models.CharField(max_length=10, unique=True, null=True)
     is_leader = models.BooleanField(default=False)
-    username = models.CharField(max_length=50, blank=True, null=True)
+    username = models.CharField(max_length=100, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -47,8 +47,9 @@ class Project(models.Model):
     project_name = models.CharField(max_length=50)
     git_url = models.URLField(max_length=200)
     deploy_link = models.URLField(max_length=200, null=True)
+    description = models.TextField(null=True)
     team = models.ForeignKey(
-        Team, on_delete=models.CASCADE, related_name='team')
+        Team, on_delete=models.CASCADE, unique=True, related_name='team')
 
     def __str__(self):
-        return self.team.project_name
+        return self.project_name

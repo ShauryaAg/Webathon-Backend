@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <!-- google fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=Sunflower:700&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <!-- <link rel="stylesheet" href="./styles.css"> -->
+
+    <style>
+        html, body{
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.left-side{
+    left: 0;
+    top: 0;
+    width: 30%;
+}
+
+.spongebob{
+    padding: 0;
+    right: 0;
+    top: 0;
+    float: right;
+    width: 15%;
+}
+
+.right-side{
+    float: right;
+    bottom: 0;
+}
+
+.confirm{
+    text-align: center;
+    margin-top: -20%;
+}
+
+.tickmark{
+    text-align: center;
+    width: 10vh;
+}
+
+.text{
+    font-size: 5vh;
+    font-family: 'Sunflower', sans-serif;
+    font-weight: 700;
+    text-align: center;
+}
+
+.login-btn{
+    font-size: 3vh;
+    font-family: 'Sunflower', sans-serif;
+    font-weight: 500;
+    background: linear-gradient(90deg, #41BDF2 -15.14%, #13FFBE 120.91%);
+    padding: 1.5vh;
+    padding-left: 1.5vw;
+    padding-right: 1.5vw; 
+    border: none;
+    border-radius: 4vh;
+    cursor: pointer;
+}
+
+.login-btn:focus{
+    outline: none;
+}
+
+@media screen and (max-width: 600px){
+    .text{
+        font-size: 2.5vh;
+    }
+
+    .left-side{
+        width: 80%;
+    }
+
+    .tickmark{
+        width: 7vh;
+    }
+
+    .spongebob{
+        margin-top: -60%;
+        margin-right: -1%;
+        width: 30%;
+        transform: rotate(90deg);
+    }
+
+    .login-btn{
+        font-size: 2vh;
+        padding: 1vh;
+        padding-left: 3vw;
+        padding-right: 3vw; 
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="left-side" src="{% static 'email/left_side.svg' %}" alt="left Image">
+        <img class="spongebob" src="{% static 'email/spongebob.svg' %}" alt="spongebob">
+        <div class="confirm">
+            <img class="tickmark" src="{% static 'email/tick_mark.svg' %}" alt="tickmark">
+            <div class="text">
+                {{ details }}
+            </div>
+            <div class="button">
+                <a href="https://dscbvp.dev/login">
+                    <button class="login-btn">go to login</button>
+                </a>
+            </div>
+        </div>
+        <img class="right-side" src="{% static 'email/right_side.svg' %}" alt="">
+    </div>
+</body>
+</html>

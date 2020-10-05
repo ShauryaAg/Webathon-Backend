@@ -1,8 +1,8 @@
-from django.urls import path, include
+from django.urls import path, re_path, include
 from knox import views as knox_views
 from django.conf.urls import url
 
-from .api import LoginStudentAPI, RegisterStudentAPI, RegisterTeamAPI, StudentAPI, TeamAPI, AddStudentAPI, ProjectAPI, StudentTeamAPI
+from .api import LoginStudentAPI, RegisterStudentAPI, RegisterTeamAPI, StudentAPI, TeamAPI, AddStudentAPI, ProjectAPI, StudentTeamAPI, RegisterOrganizerAPI, ActivateAccount
 
 from rest_framework.routers import DefaultRouter
 
@@ -38,6 +38,9 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc',
                                        cache_timeout=0), name='schema-redoc'),
 
+    path('api/auth/reg/org', RegisterOrganizerAPI.as_view()),
+
+
     path('api/auth', include('knox.urls')),
     path('api/auth/student', StudentAPI.as_view()),
     path('api/auth/login', LoginStudentAPI.as_view()),
@@ -45,6 +48,9 @@ urlpatterns = [
     path('api/auth/reg/student', RegisterStudentAPI.as_view()),
     path('api/auth/reg/team', RegisterTeamAPI.as_view()),
     path('api/add/student', AddStudentAPI.as_view()),
+
+    re_path('activate/(?P<uidb64>[0-9A-Za-z_\\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
+        ActivateAccount, name='activate'),
 
     url(r'^api/password/',
         include('django_rest_passwordreset.urls', namespace='password_reset')),
