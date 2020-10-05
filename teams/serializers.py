@@ -97,3 +97,16 @@ class ChangePasswordSerializer(serializers.Serializer):
     def validate_new_password(self, value):
         validate_password(value)
         return value
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+
+    email = serializers.EmailField()
+
+    def validate(self, value):
+        user = Student.objects.get(email=email)
+        if not user:
+            raise serializers.ValidationError("Incorrect Credentials")

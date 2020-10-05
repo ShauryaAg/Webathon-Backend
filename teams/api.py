@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from knox.models import AuthToken
 
-from django.shortcuts import render
 from django.core.mail import EmailMessage
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
@@ -12,13 +12,14 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
 from .models import *
-from .token import account_activation_token
-from .serializers import StudentSerializer, RegisterStudentSerializer, LoginStudentSerializer, RegisterTeamSerializer, TeamSerializer, ProjectSerializer, ChangePasswordSerializer
+from .forms import ResetPasswordForm
+from .token import account_activation_token, password_reset_token
+from .serializers import StudentSerializer, RegisterStudentSerializer, LoginStudentSerializer, RegisterTeamSerializer, TeamSerializer, ProjectSerializer, ChangePasswordSerializer, ResetPasswordSerializer
 
 
 class RegisterStudentAPI(generics.GenericAPIView):
     """
-    API endpoint for registering a new participant
+    API endpoint for registering a new participant and sending confirmation email
     """
     serializer_class = RegisterStudentSerializer
 
@@ -165,7 +166,7 @@ class StudentTeamAPI(viewsets.ReadOnlyModelViewSet):
         return user.student.all()
 
 
-class UpdatePassword(generics.GenericAPIView):
+class UpdatePasswordAPI(generics.GenericAPIView):
     """
     API endpoint for changing password.
     """
@@ -192,6 +193,34 @@ class UpdatePassword(generics.GenericAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ResetPasswordAPI(generics.GenericAPIView):
+
+    serializer_class = ResetPasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        data_obj = request.data
+
+        email = data_obj['email']
+        user = Student.objects.get(email=email)
+
+        current_site = get_current_site(request)
+        mail_subject = 'Reset your DSC WOW password.'
+        message = render_to_string('reset_password_email.html', {
+                'user': user.first_name,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': password_reset_token.make_token(user),
+            })
+        to_email = user.email
+        email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+        email.content_subtype = "html"
+        email.send()
+        return Response({ 
+            "details":"Please Reset Your Password!"
+        })
 
 class RegisterOrganizerAPI(generics.GenericAPIView):
 
@@ -228,9 +257,35 @@ def ActivateAccount(request, uidb64, token):
         user.is_active = True
         user.save()
         details={}
-        details['details']='you email is confirmed'
+        details['details'] = 'Your email is confirmed'
         return render(request, 'email_conf.html', details)
     else:
         details={}
-        details['details']='Activation Link is Invalid!'
+        details['details'] = 'Activation Link is Invalid!'
         return render(request, 'email_conf.html', details)
+
+
+def ResetPassword(request, uidb64, token):
+    """
+    API endpoint to reset user password
+    """
+
+    form = ResetPasswordForm(request.POST)
+
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = Student.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, Student.DoesNotExist):
+        user = None
+    if user is not None and password_reset_token.check_token(user, token):
+        if request.method == "POST":
+            if form.is_valid():
+                new_password = form.cleaned_data['new_password']
+                user.set_password(new_password)
+                user.save()
+                return redirect('login')
+        else:
+            form = ResetPasswordForm()
+        return render(request, 'password_reset.html', {'form': form})
+
+    
