@@ -211,10 +211,10 @@ class ResetPasswordAPI(generics.GenericAPIView):
     serializer_class = ResetPasswordSerializer
 
     def post(self, request, *args, **kwargs):
-        data_obj = request.data
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        email = data_obj['email']
-        user = Student.objects.get(email=email)
+        user = serializer.validated_data
 
         current_site = get_current_site(request)
         mail_subject = 'Reset your DSC WOW password.'

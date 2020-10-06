@@ -30,9 +30,9 @@ class RegisterStudentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
 
-        self.firstname_bytes = str.encode(validated_data['first_name'])
-        self.token = hashlib.sha256(self.firstname_bytes).hexdigest()
-        username = self.token + validated_data['email']
+        self.email_bytes = str.encode(validated_data['email'])
+        self.token = hashlib.sha256(self.email_bytes).hexdigest()
+        username = self.token
 
         user = Student.objects.create_user(
             email=validated_data['email'], password=validated_data['password'], first_name=validated_data['first_name'], last_name=validated_data['last_name'], college=validated_data['college'], phone_no=validated_data['phone_no'], username=username, is_leader=validated_data['is_leader'])
@@ -89,6 +89,16 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ('id', 'project_name', 'git_url', 'deploy_link', 'team', 'description',)
 
+    def validate(self, data):
+        request = self.context['request']
+        user = request.user
+        student_team = user.student.all().first()
+        if not student_team:
+            raise serializers.ValidationError({"err": "User has not joined any team yet"})
+        if Project.objects.filter(team=student_team).exists():
+            raise serializers.ValidationError({"err": "Project for this team already exists"})
+        return data
+
 
 class ChangePasswordSerializer(serializers.Serializer):
     """
@@ -109,7 +119,9 @@ class ResetPasswordSerializer(serializers.Serializer):
 
     email = serializers.EmailField()
 
-    def validate(self, value):
-        user = Student.objects.get(email=email)
+    def validate(self, data):
+        email = data['email']
+        user = Student.objects.filter(email=email).first()
         if not user:
-            raise serializers.ValidationError("Incorrect Credentials")
+            raise serializers.ValidationError({"err": "User with this email doesn't exist"})
+        return user
