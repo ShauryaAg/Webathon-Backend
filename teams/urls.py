@@ -38,8 +38,8 @@ urlpatterns = [
     path('redoc/', schema_view.with_ui('redoc',
                                        cache_timeout=0), name='schema-redoc'),
 
-    path('api/auth/reg/org', RegisterOrganizerAPI.as_view()),
 
+    path('api/auth/reg/org', RegisterOrganizerAPI.as_view()),
 
     path('api/auth', include('knox.urls')),
     path('api/auth/student', StudentAPI.as_view()),
@@ -49,7 +49,8 @@ urlpatterns = [
     path('api/auth/reg/team', RegisterTeamAPI.as_view()),
     path('api/add/student', AddStudentAPI.as_view()),
     path('api/auth/changepassword', UpdatePasswordAPI.as_view()),
-    path('api/auth/resetpassword', ResetPasswordAPI.as_view()),
+
+    path('api/resetpassword', ResetPasswordAPI.as_view()),
 
     re_path('activate/(?P<uidb64>[0-9A-Za-z_\\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
         ActivateAccount, name='activate'),

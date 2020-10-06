@@ -87,14 +87,19 @@ class StudentAPI(generics.RetrieveAPIView):
 
 class RegisterTeamAPI(generics.GenericAPIView):
     """
-    API endpoint to create a new team
+    API endpoint to create a new team and add the current user to it
     """
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
     serializer_class = RegisterTeamSerializer
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         team = serializer.save()
+        user = request.user
+        team.students.add(user)
         return Response({
             "team": TeamSerializer(team, context=self.get_serializer_context()).data,
         })
@@ -126,7 +131,7 @@ class AddStudentAPI(APIView):
                 'err': 'Team Not Found'
             }, status=400)
 
-        student_obj = Student.objects.get(pk=data_obj['student'])
+        student_obj = request.user
         team = Team.objects.get(token=data_obj['team_token'])
         team.students.add(student_obj)
         return Response({
@@ -144,6 +149,13 @@ class ProjectAPI(viewsets.ModelViewSet):
     ]
 
     queryset = Project.objects.all()
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        student_team = user.student.get()
+
+        serializer = serializer.save(team=student_team)
+
 
     def get_queryset(self):
         user = self.request.user

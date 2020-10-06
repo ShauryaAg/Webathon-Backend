@@ -48,7 +48,7 @@ class Project(models.Model):
     git_url = models.URLField(max_length=200)
     deploy_link = models.URLField(max_length=200, null=True)
     description = models.TextField(null=True)
-    team = models.ForeignKey(
+    team = models.OneToOneField(
         Team, on_delete=models.CASCADE, unique=True, related_name='team')
 
     def __str__(self):

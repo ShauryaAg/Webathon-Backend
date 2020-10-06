@@ -82,6 +82,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     """
     Serializer for getting projects
     """
+
+    team = TeamSerializer(read_only=True)
+
     class Meta:
         model = Project
         fields = ('id', 'project_name', 'git_url', 'deploy_link', 'team', 'description',)
