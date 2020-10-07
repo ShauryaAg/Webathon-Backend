@@ -22,7 +22,7 @@ class Team(models.Model):
     team_name = models.CharField(max_length=50, unique=True)
     idea = models.CharField(max_length=200)
     students = models.ManyToManyField(
-        Student, blank=True, related_name='student')
+        Student, blank=True, related_name='team')
     token = models.CharField(max_length=5, unique=True, null=True, blank=True)
 
     def __str__(self):

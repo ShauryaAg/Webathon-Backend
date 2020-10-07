@@ -123,7 +123,18 @@ class AddStudentAPI(APIView):
         permissions.IsAuthenticated,
     ]
 
+    def validate_request(self):
+        user = self.request.user
+        print(user)
+        print(user.team.all().exists())
+        if user.team.all().exists():
+            return Response({"err": "User has already joined a team"}, status=status.HTTP_400_BAD_REQUEST)
+
     def post(self, request, *args, **kwargs):
+        response = self.validate_request()
+        if response:
+            return response
+            
         data_obj = request.data
 
         if (len(Team.objects.filter(token=data_obj['team_token'])) == 0):
@@ -152,14 +163,14 @@ class ProjectAPI(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
-        student_team = user.student.get()
+        student_team = user.team.get()
 
         serializer = serializer.save(team=student_team)
 
 
     def get_queryset(self):
         user = self.request.user
-        student_team = user.student.all()
+        student_team = user.team.all()
 
         return Project.objects.filter(team__in=student_team)
 
@@ -175,7 +186,7 @@ class StudentTeamAPI(viewsets.ReadOnlyModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return user.student.all()
+        return user.team.all()
 
 
 class UpdatePasswordAPI(generics.GenericAPIView):

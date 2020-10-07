@@ -67,6 +67,14 @@ class RegisterTeamSerializer(serializers.ModelSerializer):
             team_name=data['team_name'], idea=data['idea'])
 
         return team
+    
+    def validate(self, data):
+        context = self.context
+        request = context['request']
+        user = request.user
+        if user.team.all().exists():
+            raise serializers.ValidationError({"err": "User has already joined a team"})
+        return data
 
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -92,7 +100,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     def validate(self, data):
         request = self.context['request']
         user = request.user
-        student_team = user.student.all().first()
+        student_team = user.team.all().first()
         if not student_team:
             raise serializers.ValidationError({"err": "User has not joined any team yet"})
         if Project.objects.filter(team=student_team).exists():
