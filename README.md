@@ -16,6 +16,7 @@ But ever since the pandemic, online events are the only things we are left with.
 - Move into the project folder `cd dsc-webathon/`
 - Create a `.env` file in the project folder
 ```
+DEBUG = True
 SECRET_KEY = '<DJANGO_SECRET>'
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
@@ -23,6 +24,11 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'noreply@example.com'
 EMAIL_HOST_PASSWORD = 'password'
+DB_NAME = webathon
+DB_USER = postgres
+DB_PASSWORD = password
+DB_HOST = localhost
+DB_PORT = 5432
 ``` 
 - Use `pip install -r requirements.txt` to install all the dependency for the project.
 - Migrate the database by `python manage.py migrate`
@@ -31,7 +37,7 @@ EMAIL_HOST_PASSWORD = 'password'
 ### Production
 - Use `python manage.py collectstatic` to collect all the static files.
 - Change the `ALLOWED_HOSTS` in `settings.py`
-- Set `DEBUG=False` in `settings.py`
+- Set `DEBUG=False` in `.env` file
 
 ### Deploy on Heroku
 - Sign up on Heroku, (if you haven't already) 
@@ -50,6 +56,8 @@ EMAIL_HOST_PASSWORD = 'password'
 - Name your new application
 - Specify the mandatory environment variables `EMAIL_HOST_USER` and `EMAIL_HOST_PASSWORD` to send emails.
 - Open the newly created application and go to `/admin` to login.
+- Set `DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT` environment variables if you have a custom database.
+> Note: If `DB_HOST` environment variable is left empty, then it will use the default database provided by heroku.
 
 
 ## Endpoint Usage

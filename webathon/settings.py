@@ -31,7 +31,7 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG')
 
 AUTH_USER_MODEL = 'teams.Student'
 
@@ -92,12 +92,24 @@ WSGI_APPLICATION = 'webathon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+try:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT'),
+        }
     }
-}
+except:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 # Password validation
@@ -138,7 +150,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-django_heroku.settings(locals())
+print(locals())
+
+heroku_databases = True
+if config('DB_HOST'):
+    heroku_databases = False
+
+django_heroku.settings(locals(), databases=heroku_databases)
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

@@ -2,6 +2,11 @@
     "name": "Webathon Backend",
     "description": "A Django API to help conduct online hackathons/team events.",
     "repository": "https://github.com/ShauryaAg/dsc-webathon",
+    "addons": [
+      {
+        "plan": "heroku-postgresql"
+      }
+    ],
     "buildpacks": [
       {
         "url": "heroku/python"
@@ -12,8 +17,33 @@
         "description": "Django SECRET_KEY",
         "generator": "secret"
       },
+      "DEBUG": {
+        "description": "If it should show errors. (Keep False for production environment)",
+        "value": "True"
+      },
+      "DB_HOST": {
+        "description": "Host for the custom database (if not provided it will default to Heroku database)",
+        "required": false
+      },
+      "DB_NAME": {
+        "description": "Custom database name",
+        "required": false
+      },
+      "DB_USER": {
+        "description": "Custom database user",
+        "required": false
+      },
+      "DB_PASSWORD": {
+        "description": "Custom database user password",
+        "required": false
+      },
+      "DB_PORT": {
+        "description": "PORT for custom database",
+        "value": 5432,
+        "required": false
+      },
       "EMAIL_USE_TLS": {
-        "description": "Ecryption for sending emails (Boolean)",
+        "description": "Ecryption for sending emails",
         "value": "True"
       },
       "EMAIL_HOST": {
