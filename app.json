@@ -2,11 +2,6 @@
     "name": "Webathon Backend",
     "description": "A Django API to help conduct online hackathons/team events.",
     "repository": "https://github.com/ShauryaAg/dsc-webathon",
-    "addons": [
-      {
-        "plan": "heroku-postgresql"
-      }
-    ],
     "buildpacks": [
       {
         "url": "heroku/python"
@@ -19,7 +14,7 @@
       },
       "EMAIL_USE_TLS": {
         "description": "Ecryption for sending emails (Boolean)",
-        "value": true
+        "value": "True"
       },
       "EMAIL_HOST": {
         "description": "Host for sending emails",
@@ -39,6 +34,6 @@
       }
     },
     "scripts": {
-      "postdeploy": "python manage.py initgroups && echo from django.contrib.auth import get_user_model; CustomUser = get_user_model();  CustomUser.objects.create_superuser('admin', 'admin@example.com', 'admin') | python manage.py shell"
+      "postdeploy": "python manage.py initgroups && echo \"from django.contrib.auth import get_user_model; CustomUser = get_user_model();  CustomUser.objects.create_superuser('admin', 'admin@example.com', 'admin')\" | python manage.py shell"
     }
   }
