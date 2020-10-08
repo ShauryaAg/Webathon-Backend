@@ -150,11 +150,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-print(locals())
-
-heroku_databases = True
-if config('DB_HOST'):
+try:
+    config('DB_HOST')
     heroku_databases = False
+except:
+    heroku_databases = True
 
 django_heroku.settings(locals(), databases=heroku_databases)
 
