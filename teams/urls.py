@@ -25,7 +25,7 @@ schema_view = get_schema_view(
 
 
 router = DefaultRouter()
-router.register(r'api/auth/team', TeamAPI, basename='Team')
+router.register(r'api/team', TeamAPI, basename='Team')
 router.register(r'api/auth/project', ProjectAPI, basename='Project')
 router.register(r'api/auth/student/team',
                 StudentTeamAPI, basename='student_team')
@@ -47,7 +47,7 @@ urlpatterns = [
     path('api/auth/logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
     path('api/auth/reg/student', RegisterStudentAPI.as_view()),
     path('api/auth/reg/team', RegisterTeamAPI.as_view()),
-    path('api/add/student', AddStudentAPI.as_view()),
+    path('api/auth/add/student', AddStudentAPI.as_view()),
     path('api/auth/changepassword', UpdatePasswordAPI.as_view()),
 
     path('api/resetpassword', ResetPasswordAPI.as_view()),

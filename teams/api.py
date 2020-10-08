@@ -152,7 +152,7 @@ class AddStudentAPI(APIView):
 
 class ProjectAPI(viewsets.ModelViewSet):
     """
-    API endpoint to get current user's team's projects
+    API endpoint to create and get current user's team's projects
     """
     serializer_class = ProjectSerializer
     permission_classes = [

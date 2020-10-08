@@ -103,8 +103,9 @@ class ProjectSerializer(serializers.ModelSerializer):
         student_team = user.team.all().first()
         if not student_team:
             raise serializers.ValidationError({"err": "User has not joined any team yet"})
-        if Project.objects.filter(team=student_team).exists():
-            raise serializers.ValidationError({"err": "Project for this team already exists"})
+        if request.method == 'POST':
+            if Project.objects.filter(team=student_team).exists():
+                raise serializers.ValidationError({"err": "Project for this team already exists"})
         return data
 
 
