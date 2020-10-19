@@ -1,4 +1,4 @@
-# DSC Webathon
+# Webathon
 
 ### About
 It is an API to help conduct online hackathons/team events. It consists of user auth, team forming and project submission.
@@ -12,8 +12,8 @@ The project was initially started a year ago when online hackathons was not a th
 But ever since the pandemic, online events are the only things we are left with.
 
 ### Setup locally
-- Clone the repo using `git clone https://github.com/ShauryaAg/dsc-webathon.git`
-- Move into the project folder `cd dsc-webathon/`
+- Clone the repo using `git clone https://github.com/ShauryaAg/Webathon-Backend.git`
+- Move into the project folder `cd Webathon-Backend/`
 - Create a `.env` file in the project folder
 ```
 DEBUG = True
