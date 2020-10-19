@@ -1,7 +1,7 @@
 {
     "name": "Webathon Backend",
     "description": "A Django API to help conduct online hackathons/team events.",
-    "repository": "https://github.com/ShauryaAg/dsc-webathon",
+    "repository": "https://github.com/ShauryaAg/Webathon-Backend",
     "addons": [
       {
         "plan": "heroku-postgresql"
